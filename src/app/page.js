@@ -2,12 +2,18 @@
 
 import { getMonth } from "./utils";
 import Month from "@/_components/Month";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CalendarHeader from "../_components/CalendarHeader";
 import SideBar from "@/_components/Sidebar";
+import GlobalContext from "@/_context/GlobalContext";
 
 export default function Home() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
+  const { monthIndex } = useContext(GlobalContext);
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
 
   return (
     <div className="h-screen flex flex-1">
