@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import GlobalContext from "@/_context/GlobalContext";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import dayjs from "dayjs";
 
 function CalenderHeader() {
@@ -20,14 +20,14 @@ function CalenderHeader() {
         size="icon"
         onClick={() => setMonthIndex(monthIndex - 1)}
       >
-        <ChevronLeft />
+        <FaChevronLeft size={24} />
       </Button>
       <Button
         variant="outline"
         size="icon"
         onClick={() => setMonthIndex(monthIndex + 1)}
       >
-        <ChevronRight />
+        <FaChevronRight size={24} />
       </Button>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
         {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
