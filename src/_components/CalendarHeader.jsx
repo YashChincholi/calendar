@@ -11,7 +11,13 @@ function CalenderHeader() {
       <Button
         variant="outline"
         size="icon"
-        onClick={() => setMonthIndex(dayjs().month())}
+        onClick={() =>
+          setMonthIndex(
+            monthIndex === dayjs().month()
+              ? monthIndex + Math.random()
+              : dayjs().month()
+          )
+        }
       >
         Today
       </Button>

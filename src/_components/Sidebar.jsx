@@ -5,6 +5,7 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import CreateEventButton from "./CreateEventButton";
+import SmallCalendar from "./SmallCalendar";
 
 function SideBar() {
   return (
@@ -16,7 +17,8 @@ function SideBar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <CreateEventButton/>
+        <CreateEventButton />
+        <SmallCalendar />
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
