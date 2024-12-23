@@ -9,6 +9,10 @@ const GlobalContext = createContext({
   setDaySelected: (day) => {},
   showEventModal: null,
   setShowEventModal: () => {},
+  dispatchEvent: ({ type, payload }) => {},
+  savedEvents: [],
+  selectedEvent: null,
+  setSelectedEvent: () => {},
 });
 
 export default GlobalContext;

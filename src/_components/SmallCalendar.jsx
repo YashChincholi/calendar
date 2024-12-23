@@ -33,10 +33,13 @@ function SmallCalendar() {
     const nowDay = dayjs().format(format); // Current day
     const currDay = day.format(format); // Day in the calendar
     const sltDay = daySelected && daySelected.format(format); // Selected day
+
+    console.log(`nowDay: ${nowDay}, currDay: ${currDay}, sltDay: ${sltDay}`);
+
     if (nowDay === currDay) {
       return "bg-blue-500 rounded-full text-white"; // Style for current day
     } else if (sltDay === currDay) {
-      return "bg-red-500 rounded-full text-white"; // Style for selected day
+      return "bg-red-500 rounded-full text-white hover:bg-red-500"; // Style for selected day
     } else {
       return ""; // Default style
     }

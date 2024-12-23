@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-function TimePickerComponent() {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-
+function TimePickerComponent({ hours, setHours, minutes, setMinutes }) {
   const incrementHours = () => {
     setHours((prev) => (prev < 23 ? prev + 1 : 0));
   };

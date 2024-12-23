@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import GlobalContext from "@/_context/GlobalContext";
 import {
   AlertDialog,
@@ -7,20 +8,19 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useContext, useState } from "react";
-import { FaCalendarAlt, FaCheck } from "react-icons/fa";
+import { FaCalendarAlt, FaCheck, FaTrash } from "react-icons/fa";
 import TimePickerComponent from "./TimePicker";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const labelsClasses = [
   { category: "office", color: "indigo" },
@@ -41,15 +41,49 @@ const colorClassMapping = {
 };
 
 function EventModal() {
-  const { showEventModal, setShowEventModal, daySelected } =
-    useContext(GlobalContext);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [selectedLabel, setSelectedLabel] = useState("");
+  const {
+    showEventModal,
+    setShowEventModal,
+    daySelected,
+    dispatchCalEvents,
+    selectedEvent,
+  } = useContext(GlobalContext);
+  const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : "");
+  const [description, setDescription] = useState(
+    selectedEvent ? selectedEvent.description : ""
+  );
+  const [selectedLabel, setSelectedLabel] = useState(
+    selectedEvent ? selectedEvent.label : {}
+  );
+  const [hours, setHours] = useState(
+    selectedEvent ? selectedEvent.time.hours : 0
+  );
+  const [minutes, setMinutes] = useState(
+    selectedEvent ? selectedEvent.time.minutes : 0
+  );
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    const calendarEvent = {
+      id: selectedEvent ? selectedEvent.id : Date.now(),
+      title,
+      description,
+      label: selectedLabel,
+      day: daySelected.valueOf(),
+      time: { hours, minutes },
+    };
+    if (selectedEvent) {
+      dispatchCalEvents({ type: "update", payload: calendarEvent });
+    } else {
+      dispatchCalEvents({ type: "push", payload: calendarEvent });
+    }
+    setShowEventModal(false);
+  };
 
   return (
     <AlertDialog open={showEventModal}>
-      <AlertDialogHeader visuallyHidden />
+      <AlertDialogHeader />
+      <AlertDialogTitle />
       <AlertDialogContent>
         <AlertDialogHeader>
           <Label htmlFor="title">Title</Label>
@@ -58,9 +92,7 @@ function EventModal() {
             name="title"
             placeholder="Add Title"
             value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
           <Label htmlFor="description">Description</Label>
@@ -69,14 +101,16 @@ function EventModal() {
             name="description"
             placeholder="Add Description"
             value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
           <Label htmlFor="Time">Time</Label>
-
-          <TimePickerComponent />
+          <TimePickerComponent
+            hours={hours}
+            setHours={setHours}
+            minutes={minutes}
+            setMinutes={setMinutes}
+          />
           <div className="flex items-center gap-11">
             <Label>Label</Label>
             <div className="flex space-x-2">
@@ -87,11 +121,9 @@ function EventModal() {
                       className={`${
                         colorClassMapping[label.color]
                       } w-5 h-5 rounded-full flex items-center justify-center cursor-pointer`}
-                      onClick={() => {
-                        setSelectedLabel(label.color);
-                      }}
+                      onClick={() => setSelectedLabel(label)}
                     >
-                      {selectedLabel === label.color && (
+                      {selectedLabel.color === label.color && (
                         <FaCheck size={12} color="white" />
                       )}
                     </span>
@@ -114,14 +146,24 @@ function EventModal() {
               {daySelected.format("dddd, MMMM DD ")}
             </div>
           </AlertDialogDescription>
-          <AlertDialogCancel
+
+          <Button
             onClick={() => {
+              dispatchCalEvents({ type: "delete", payload: selectedEvent });
               setShowEventModal(false);
             }}
+            variant="destructive"
+            size="icon"
           >
+            <FaTrash />
+          </Button>
+          <AlertDialogCancel onClick={() => setShowEventModal(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction>Submit</AlertDialogAction>
+
+          <AlertDialogAction onClick={handelSubmit}>
+            {selectedEvent ? "Update" : "Submit"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

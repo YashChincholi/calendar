@@ -17,12 +17,12 @@ export default function Home() {
   }, [monthIndex]);
 
   return (
-    <div className="h-screen flex flex-1">
+    <div className="h-screen flex flex-1 bg-black">
       {showEventModal && <EventModal />}
       <SideBar className="w-64 bg-gray-200" />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 mt-20">
         <CalendarHeader />
-        <div className="flex flex-1">
+        <div className="flex flex-1 lg:px-20 pb-20">
           <Month month={currentMonth} />
         </div>
       </div>

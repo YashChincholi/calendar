@@ -19,25 +19,20 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Features
 
--Add Events: Users can add events by clicking on a specific day in the calendar.
--Edit Events: Users can edit existing events by selecting them from the calendar.
--Delete Events: Users can delete events from a selected day.
--Event Details: Each event includes:
---Event name
---Start time and end time
---Optional description
--Monthly Calendar: Displays a calendar grid for the current month with all days properly aligned.
--Navigation: Users can switch between months using "Previous" and "Next" buttons.
--Synchronized Calendars: Includes a large main calendar and a small calendar, both synchronized to show the same month and selected day.
--Visual Differentiation: Highlights the selected day and the current day with distinct visual styles.
-Event List
--Daily Events: Displays a list of all events for the selected day in a modal or side panel.
--Event Filtering: Allows users to filter events by category (e.g., work, personal, others).
--Local Storage: Uses localStorage to persist events between page refreshes, ensuring that user data is not lost.
--Event Categories: Implements color coding for events based on categories (e.g., work, personal, others).
--Hover Effects: Shows a hover card with a badge indicating the event category when hovering over a category label.
--Export Events: Allows users to export the event list for a specific month as a JSON or CSV file.
--Drag and Drop: Enables users to drag and drop events to different days within the calendar for easy rescheduling.
+- Add Events: Users can add events by clicking on a specific day in the calendar.
+- Edit Events: Users can edit existing events by selecting them from the calendar.
+- Delete Events: Users can delete events from a selected day
+- Monthly Calendar: Displays a calendar grid for the current month with all days properly aligned.
+- Navigation: Users can switch between months using "Previous" and "Next" buttons.
+- Synchronized Calendars: Includes a large main calendar and a small calendar, both synchronized to show the same month and selected day.
+- Visual Differentiation: Highlights the selected day and the current day with distinct visual styles.
+- Daily Events: Displays a list of all events for the selected day in a modal or side panel.
+- Event Filtering: Allows users to filter events by category (e.g., work, personal, others).
+- Local Storage: Uses localStorage to persist events between page refreshes, ensuring that user data is not lost.
+- Event Categories: Implements color coding for events based on categories (e.g., work, personal, others).
+- Hover Effects: Shows a hover card with a badge indicating the event category when hovering over a category label.
+- Export Events: Allows users to export the event list for a specific month as a JSON or CSV file.
+- Drag and Drop: Enables users to drag and drop events to different days within the calendar for easy rescheduling.
 
 ## Learn More
 
