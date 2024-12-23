@@ -1,13 +1,20 @@
+import GlobalContext from "@/_context/GlobalContext";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useContext } from "react";
 
 function Day({ day, rowIndex }) {
   const getCurrentDate = () => {
     return day.format("DD-MM-YYYY") === dayjs().format("DD-MM-YYYY");
   };
+  const { setShowEventModal, setDaySelected } = useContext(GlobalContext);
 
   return (
-    <div className="border border-gray-200 flex flex-col">
+    <div
+      onClick={() => {
+        setShowEventModal(true), setDaySelected(day);
+      }}
+      className="border border-gray-200 flex flex-col"
+    >
       <header className="flex flex-col items-center">
         {rowIndex === 0 && (
           <p className="text-sm p-1 grid">{day.format("ddd").toUpperCase()}</p>

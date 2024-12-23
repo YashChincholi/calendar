@@ -10,7 +10,9 @@ function ContextWrapper({ children }) {
   // State to manage the month index for the small calendar
   const [smallCalendarMonth, setSmallCalendarMonth] = useState(null);
   // State to manage the selected day
-  const [daySelected, setDaySelected] = useState(null);
+  const [daySelected, setDaySelected] = useState(dayjs());
+  // State to manage the event model
+  const [showEventModal, setShowEventModal] = useState(null);
 
   // Effect to update the main month index when the small calendar month changes
   useEffect(() => {
@@ -29,6 +31,8 @@ function ContextWrapper({ children }) {
         setSmallCalendarMonth,
         daySelected,
         setDaySelected,
+        showEventModal,
+        setShowEventModal,
       }}
     >
       {children}
