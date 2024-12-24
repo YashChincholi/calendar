@@ -12,9 +12,10 @@ export default function ExportButtons() {
     (evt) => dayjs(evt.day).month() === monthIndex
   );
 
+
   return (
     <div className="export-buttons flex items-center justify-around gap-2">
-      <Button  onClick={() => exportEventsAsJSON(eventsForMonth, month)}>
+      <Button onClick={() => exportEventsAsJSON(eventsForMonth, month)}>
         Export as JSON
       </Button>
       <Button onClick={() => exportEventsAsCSV(eventsForMonth, month)}>

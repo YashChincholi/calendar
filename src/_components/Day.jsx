@@ -1,10 +1,10 @@
-"use client";
 import { useDraggable } from "@dnd-kit/core";
 import GlobalContext from "@/_context/GlobalContext";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import React, { useContext, useEffect, useState } from "react";
 
 const labelColorMapping = {
@@ -17,6 +17,7 @@ const labelColorMapping = {
 };
 
 function Day({ day, rowIndex }) {
+  dayjs.extend(utc);
   const [dayEvents, setDayEvents] = useState([]);
   const getCurrentDate = () =>
     day.format("DD-MM-YYYY") === dayjs().format("DD-MM-YYYY");
@@ -29,17 +30,36 @@ function Day({ day, rowIndex }) {
   } = useContext(GlobalContext);
 
   useEffect(() => {
-    const events = savedEvents.filter(
-      (evt) => dayjs(evt.day).format("DD-MM-YYYY") === day.format("DD-MM-YYYY")
-    );
+    console.log("savedevents", savedEvents);
+    console.log("day", day.format("YYYY-MM-DD"));
+    const events = savedEvents.filter((evt) => {
+      const evtDayFormatted = dayjs(evt.day)
+        .utc()
+        .startOf("day")
+        .format("YYYY-MM-DD");
+      const dayFormatted = day.utc().startOf("day").format("YYYY-MM-DD");
+      console.log("evt.day", evtDayFormatted);
+      console.log("day", dayFormatted);
+      return evtDayFormatted === dayFormatted;
+    });
+    console.log("filtered events", events);
     setDayEvents(events);
   }, [savedEvents, day]);
 
   useEffect(() => {
-    const events = filteredEvents.filter(
-      (evt) => dayjs(evt.day).format("DD-MM-YYYY") === day.format("DD-MM-YYYY")
-    );
-   
+    console.log("filtered events", filteredEvents);
+    console.log("day", day.format("YYYY-MM-DD"));
+    const events = filteredEvents.filter((evt) => {
+      const evtDayFormatted = dayjs(evt.day)
+        .utc()
+        .startOf("day")
+        .format("YYYY-MM-DD");
+      const dayFormatted = day.utc().startOf("day").format("YYYY-MM-DD");
+      console.log("evt.day", evtDayFormatted);
+      console.log("day", dayFormatted);
+      return evtDayFormatted === dayFormatted;
+    });
+    console.log("filtered events", events);
     setDayEvents(events);
   }, [filteredEvents, day]);
 

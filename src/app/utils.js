@@ -33,14 +33,18 @@ export function exportEventsAsJSON(events, month) {
 }
 
 export function exportEventsAsCSV(events, month) {
-  const parser = new Parser();
-  const csv = parser.parse(events);
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `events-${month}.csv`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  try {
+    const parser = new Parser();
+    const csv = parser.parse(events);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `events-${month}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Error exporting CSV:", error);
+  }
 }

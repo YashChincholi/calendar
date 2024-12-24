@@ -18,7 +18,6 @@ export default function Home() {
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
-
   function handleDragEnd(event) {
     const { active, over } = event;
 
@@ -27,6 +26,7 @@ export default function Home() {
       return;
     }
 
+   
     const eventId = active.id;
     const newDate = over.id;
 
@@ -39,11 +39,9 @@ export default function Home() {
           day: parsedDate.toISOString(),
         };
         dispatchCalEvent({ type: "update", payload: updatedEventWithNewDate });
-      } else {
-      }
+      } 
     }
   }
-
   return (
     <div className="h-screen flex flex-1 z-0 bg-black">
       {showEventModal && <EventModal />}

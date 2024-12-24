@@ -24,7 +24,6 @@ function DroppableDay({ day, rowIndex }) {
 
   return (
     <div ref={setNodeRef} className="flex flex-col relative">
-      {" "}
       {/* Add relative positioning */}
       <Day day={day} rowIndex={rowIndex} />
     </div>

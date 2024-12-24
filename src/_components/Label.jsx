@@ -5,10 +5,22 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@radix-ui/react-separator";
 import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
+import { FaEdit } from "react-icons/fa";
 
 export default function Labels() {
-  const { labels, updateLabel, savedEvents } = useContext(GlobalContext);
+  const {
+    labels,
+    updateLabel,
+    savedEvents,
+    setShowEventModal,
+    setSelectedEvent,
+  } = useContext(GlobalContext);
 
+  const handleEditClick = (event) => {
+    setSelectedEvent(event);
+    setShowEventModal(true);
+  };
 
   return (
     <React.Fragment>
@@ -37,9 +49,12 @@ export default function Labels() {
                     className={`form-checkbox h-5 w-5 text-${event.label.color}-400 rounded focus:ring-0 cursor-pointer`}
                   />
                   <Label className="text-sm font-semibold ml-2">
-                    {event.title} at {event.time?.hours}:{event.time?.minutes}{" "}
+                    {event.title} at {event.time?.hours}:{event.time?.minutes}
                     on {dayjs(event.day).format("DD/MM/YY")}
                   </Label>
+                  <Button onClick={() => handleEditClick(event)}>
+                    <FaEdit size="icon" />
+                  </Button>
                 </label>
               </div>
               <Separator className="my-2" />
