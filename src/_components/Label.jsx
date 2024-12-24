@@ -8,8 +8,11 @@ import dayjs from "dayjs";
 
 export default function Labels() {
   const { labels, updateLabel, savedEvents } = useContext(GlobalContext);
+
   useEffect(() => {
-    console.log(savedEvents[0].time, savedEvents[0].day);
+    if (savedEvents.length > 0) {
+      console.log(savedEvents[0].time, savedEvents[0].day);
+    }
   }, [savedEvents]);
 
   return (
@@ -23,7 +26,7 @@ export default function Labels() {
                 <label
                   htmlFor="label"
                   key={idx}
-                  className=" mt-3 flex items-center"
+                  className="mt-3 flex items-center"
                 >
                   <Checkbox
                     id="label"
@@ -38,11 +41,9 @@ export default function Labels() {
                     }}
                     className={`form-checkbox h-5 w-5 text-${event.label.color}-400 rounded focus:ring-0 cursor-pointer`}
                   />
-
                   <Label className="text-sm font-semibold ml-2">
-                    {event.title} at&nbsp;
-                    {event.time.hours}:{event.time.minutes} on{" "}
-                    {dayjs(event.day).format("DD/MM/YY")}
+                    {event.title} at {event.time?.hours}:{event.time?.minutes}{" "}
+                    on {dayjs(event.day).format("DD/MM/YY")}
                   </Label>
                 </label>
               </div>

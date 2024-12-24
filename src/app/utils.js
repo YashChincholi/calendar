@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { Parser } from "json2csv";
 
 export function getMonth(month = dayjs().month()) {
   // getting year and first Day of month
@@ -17,4 +18,29 @@ export function getMonth(month = dayjs().month()) {
     });
   });
   return dayMatrix;
+}
+
+export function exportEventsAsJSON(events, month) {
+  const dataStr = JSON.stringify(events, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `events-${month}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export function exportEventsAsCSV(events, month) {
+  const parser = new Parser();
+  const csv = parser.parse(events);
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `events-${month}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

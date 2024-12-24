@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useReducer, useMemo } from "react";
 import GlobalContext from "./GlobalContext";
 import dayjs from "dayjs";
@@ -16,6 +15,7 @@ function savedEventsReducer(state, { type, payload }) {
       throw new Error();
   }
 }
+
 function initEvents() {
   const storageEvents = localStorage.getItem("savedEvents");
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
@@ -46,6 +46,7 @@ export default function ContextWrapper(props) {
 
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+    console.log("Updated savedEvents:", savedEvents); // Add logging
   }, [savedEvents]);
 
   useEffect(() => {

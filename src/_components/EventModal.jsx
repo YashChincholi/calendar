@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useState } from "react";
 import GlobalContext from "@/_context/GlobalContext";
 import {
@@ -161,9 +163,7 @@ function EventModal() {
             Cancel
           </AlertDialogCancel>
 
-          <AlertDialogAction onClick={handelSubmit}>
-            {selectedEvent ? "Update" : "Submit"}
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handelSubmit}>Submit</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

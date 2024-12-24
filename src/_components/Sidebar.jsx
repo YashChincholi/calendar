@@ -10,7 +10,7 @@ import Labels from "./Label";
 
 function SideBar() {
   return (
-    <Sidebar>
+    <Sidebar >
       <SidebarHeader>
         <div className="flex items-center justify-start bg-[#E7EDE7]">
           <img src="./logo.svg" alt="logo" className="mr-2 w-30 h-20" />
