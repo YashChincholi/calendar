@@ -32,7 +32,6 @@ function Day({ day, rowIndex }) {
     const events = savedEvents.filter(
       (evt) => dayjs(evt.day).format("DD-MM-YYYY") === day.format("DD-MM-YYYY")
     );
-    console.log("Day:", day.format("DD-MM-YYYY"), "Filtered Events:", events); // Add logging
     setDayEvents(events);
   }, [savedEvents, day]);
 
@@ -40,12 +39,7 @@ function Day({ day, rowIndex }) {
     const events = filteredEvents.filter(
       (evt) => dayjs(evt.day).format("DD-MM-YYYY") === day.format("DD-MM-YYYY")
     );
-    console.log(
-      "Filtered Events for Day:",
-      day.format("DD-MM-YYYY"),
-      "Filtered Events:",
-      events
-    ); // Add logging
+   
     setDayEvents(events);
   }, [filteredEvents, day]);
 

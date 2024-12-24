@@ -17,9 +17,12 @@ function savedEventsReducer(state, { type, payload }) {
 }
 
 function initEvents() {
-  const storageEvents = localStorage.getItem("savedEvents");
-  const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
-  return parsedEvents;
+  if (typeof window !== "undefined") {
+    const storageEvents = localStorage.getItem("savedEvents");
+    const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
+    return parsedEvents;
+  }
+  return [];
 }
 
 export default function ContextWrapper(props) {
@@ -45,8 +48,9 @@ export default function ContextWrapper(props) {
   }, [savedEvents, labels]);
 
   useEffect(() => {
-    localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-    console.log("Updated savedEvents:", savedEvents); // Add logging
+    if (typeof window !== "undefined") {
+      localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+    }
   }, [savedEvents]);
 
   useEffect(() => {

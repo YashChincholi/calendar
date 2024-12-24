@@ -9,11 +9,6 @@ import dayjs from "dayjs";
 export default function Labels() {
   const { labels, updateLabel, savedEvents } = useContext(GlobalContext);
 
-  useEffect(() => {
-    if (savedEvents.length > 0) {
-      console.log(savedEvents[0].time, savedEvents[0].day);
-    }
-  }, [savedEvents]);
 
   return (
     <React.Fragment>

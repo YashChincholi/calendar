@@ -24,12 +24,8 @@ export default function Home() {
 
     if (!over) {
       // Reset the event's position if not dropped over a valid date
-      console.log("Event not dropped over a valid date, resetting position.");
       return;
     }
-
-    console.log("Dragged event ID:", active.id);
-    console.log("Dropped over ID:", over.id);
 
     const eventId = active.id;
     const newDate = over.id;
@@ -42,10 +38,8 @@ export default function Home() {
           ...updatedEvent,
           day: parsedDate.toISOString(),
         };
-        console.log("Updated Event:", updatedEventWithNewDate);
         dispatchCalEvent({ type: "update", payload: updatedEventWithNewDate });
       } else {
-        console.error("Invalid date:", newDate);
       }
     }
   }
