@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useState, useEffect, useReducer, useMemo } from "react";
 import GlobalContext from "./GlobalContext";
 import dayjs from "dayjs";
 
@@ -8,56 +8,75 @@ function savedEventsReducer(state, { type, payload }) {
   switch (type) {
     case "push":
       return [...state, payload];
-      break;
-
     case "update":
       return state.map((evt) => (evt.id === payload.id ? payload : evt));
-
     case "delete":
       return state.filter((evt) => evt.id !== payload.id);
-
     default:
       throw new Error();
   }
 }
-
-function intiEvents() {
+function initEvents() {
   const storageEvents = localStorage.getItem("savedEvents");
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
   return parsedEvents;
 }
 
-function ContextWrapper({ children }) {
-  // State to manage the current month index
+export default function ContextWrapper(props) {
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
-  // State to manage the month index for the small calendar
   const [smallCalendarMonth, setSmallCalendarMonth] = useState(null);
-  // State to manage the selected day
   const [daySelected, setDaySelected] = useState(dayjs());
-  // State to manage the event model
-  const [showEventModal, setShowEventModal] = useState(null);
-  // State to manage the event model selected events editor
+  const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  // Reducer to manage the events
-  const [savedEvents, dispatchCalEvents] = useReducer(
+  const [labels, setLabels] = useState([]);
+  const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
     [],
-    intiEvents
+    initEvents
   );
+
+  const filteredEvents = useMemo(() => {
+    return savedEvents.filter((evt) =>
+      labels
+        .filter((lbl) => lbl.checked)
+        .map((lbl) => lbl.label)
+        .includes(evt.label)
+    );
+  }, [savedEvents, labels]);
 
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
   }, [savedEvents]);
 
-  // Effect to update the main month index when the small calendar month changes
+  useEffect(() => {
+    setLabels((prevLabels) => {
+      return [...new Set(savedEvents.map((evt) => evt.label))].map((label) => {
+        const currentLabel = prevLabels.find((lbl) => lbl.label === label);
+        return {
+          label,
+          checked: currentLabel ? currentLabel.checked : true,
+        };
+      });
+    });
+  }, [savedEvents]);
+
   useEffect(() => {
     if (smallCalendarMonth !== null) {
       setMonthIndex(smallCalendarMonth);
     }
   }, [smallCalendarMonth]);
 
+  useEffect(() => {
+    if (!showEventModal) {
+      setSelectedEvent(null);
+    }
+  }, [showEventModal]);
+
+  function updateLabel(label) {
+    setLabels(labels.map((lbl) => (lbl.label === label.label ? label : lbl)));
+  }
+
   return (
-    // Provide the context values to the children components
     <GlobalContext.Provider
       value={{
         monthIndex,
@@ -68,15 +87,17 @@ function ContextWrapper({ children }) {
         setDaySelected,
         showEventModal,
         setShowEventModal,
-        dispatchCalEvents,
-        savedEvents,
+        dispatchCalEvent,
         selectedEvent,
         setSelectedEvent,
+        savedEvents,
+        setLabels,
+        labels,
+        updateLabel,
+        filteredEvents,
       }}
     >
-      {children}
+      {props.children}
     </GlobalContext.Provider>
   );
 }
-
-export default ContextWrapper;

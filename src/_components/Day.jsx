@@ -19,8 +19,13 @@ function Day({ day, rowIndex }) {
   const getCurrentDate = () => {
     return day.format("DD-MM-YYYY") === dayjs().format("DD-MM-YYYY");
   };
-  const { setShowEventModal, setDaySelected, savedEvents, setSelectedEvent } =
-    useContext(GlobalContext);
+  const {
+    setShowEventModal,
+    setDaySelected,
+    savedEvents,
+    setSelectedEvent,
+    filteredEvents,
+  } = useContext(GlobalContext);
 
   useEffect(() => {
     const events = savedEvents.filter(
@@ -29,7 +34,12 @@ function Day({ day, rowIndex }) {
     setDayEvents(events);
   }, [savedEvents, day]);
 
-  console.log(dayEvents);
+  useEffect(() => {
+    const events = filteredEvents.filter(
+      (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
+    );
+    setDayEvents(events);
+  }, [filteredEvents, day]);
 
   return (
     <div className="border border-gray-200 flex flex-col">
@@ -52,7 +62,7 @@ function Day({ day, rowIndex }) {
         className="cursor-pointer h-full w-full"
       >
         {dayEvents.map((evt, idx) => (
-          <div className="w-full">
+          <div className="w-full" key={idx}>
             <Badge
               onClick={() => {
                 setSelectedEvent(evt);

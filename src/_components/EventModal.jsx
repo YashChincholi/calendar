@@ -45,7 +45,7 @@ function EventModal() {
     showEventModal,
     setShowEventModal,
     daySelected,
-    dispatchCalEvents,
+    dispatchCalEvent,
     selectedEvent,
   } = useContext(GlobalContext);
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : "");
@@ -73,9 +73,9 @@ function EventModal() {
       time: { hours, minutes },
     };
     if (selectedEvent) {
-      dispatchCalEvents({ type: "update", payload: calendarEvent });
+      dispatchCalEvent({ type: "update", payload: calendarEvent });
     } else {
-      dispatchCalEvents({ type: "push", payload: calendarEvent });
+      dispatchCalEvent({ type: "push", payload: calendarEvent });
     }
     setShowEventModal(false);
   };
@@ -149,7 +149,7 @@ function EventModal() {
 
           <Button
             onClick={() => {
-              dispatchCalEvents({ type: "delete", payload: selectedEvent });
+              dispatchCalEvent({ type: "delete", payload: selectedEvent });
               setShowEventModal(false);
             }}
             variant="destructive"

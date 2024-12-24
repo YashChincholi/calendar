@@ -34,8 +34,6 @@ function SmallCalendar() {
     const currDay = day.format(format); // Day in the calendar
     const sltDay = daySelected && daySelected.format(format); // Selected day
 
-    console.log(`nowDay: ${nowDay}, currDay: ${currDay}, sltDay: ${sltDay}`);
-
     if (nowDay === currDay) {
       return "bg-blue-500 rounded-full text-white"; // Style for current day
     } else if (sltDay === currDay) {
